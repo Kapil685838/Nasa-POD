@@ -3,6 +3,7 @@ let api_key = "vPHOqlV7gxIHAa4Y2IfjxBYgmSOy5VT5np6eDmtn";
 
 // current date of the day
 const currentDate = new Date().toISOString().split("T")[0];
+// validation for input field of date
 document.getElementById("search-input").setAttribute('max', `${currentDate}`);
 
 // elements for the img Container
@@ -21,8 +22,9 @@ function getCurrentImageOfTheDay(){
         return res.json();
     })
     .then((data) => {
+        console.log(data);
         title.innerHTML = "NASA picture of the Day";
-        img.src = data.hdurl;
+        img.src = data.url;
         imgContainer.appendChild(img);
         img_desc.innerHTML = data.title;
         description.innerHTML = data.explanation;      
@@ -48,7 +50,7 @@ function getImageOfTheDay(event) {
     })
     .then((data) => {
         title.innerHTML = `Picture on ${date}`;
-        img.src = data.hdurl;
+        img.src = data.url;
         imgContainer.appendChild(img);
         img_desc.innerHTML = data.title;
         description.innerHTML = data.explanation;      
