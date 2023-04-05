@@ -66,7 +66,7 @@ function getImageOfTheDay(event) {
 }
 
 // function to save the data in local storage
-let history = [];
+let history = JSON.parse(localStorage.getItem('History')) || [];
 function saveSearch(date){
     history.push({date: `${date}`});
     localStorage.setItem("History", JSON.stringify(history));
@@ -93,5 +93,7 @@ function addSearchToHistory(){
 
 // program start from here
 document.getElementById('search').addEventListener('click', getImageOfTheDay);
-// function call for current image when page loads.
+
+// function calls when page loads.
 window.addEventListener('load', getCurrentImageOfTheDay);
+window.addEventListener('load', addSearchToHistory);
