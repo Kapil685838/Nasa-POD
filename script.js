@@ -14,6 +14,7 @@ imgContainer.setAttribute('id', 'img-container');
 let img = document.createElement('img');
 let img_desc = document.createElement('h3');
 let description = document.createElement('p');
+let iframe = document.createElement('iframe');
 
 // function to get the image of today
 function getCurrentImageOfTheDay(){
@@ -22,10 +23,19 @@ function getCurrentImageOfTheDay(){
         return res.json();
     })
     .then((data) => {
-        console.log(data);
+        // console.log(data);
         title.innerHTML = "NASA picture of the Day";
-        img.src = data.url;
-        imgContainer.appendChild(img);
+        if(!(data.url.includes("video"))){
+            img.src = data.url;
+            imgContainer.appendChild(img);
+        } else {
+            video.src = data.url;
+            video.controls = true;
+            video.autoplay = true;
+            video.muted = true;
+            imgContainer.appendChild(video);
+        }
+        
         img_desc.innerHTML = data.title;
         description.innerHTML = data.explanation;      
         currentImgContainer.append(title, imgContainer, img_desc, description);
@@ -37,6 +47,7 @@ function getCurrentImageOfTheDay(){
 
 // function to get the image of the day according to date.
 function getImageOfTheDay(event) {
+    console.log(currentImgContainer);
     let date;
     if(event.target.value == "Search"){
         date = document.getElementById('search-input').value;
@@ -50,8 +61,15 @@ function getImageOfTheDay(event) {
     })
     .then((data) => {
         title.innerHTML = `Picture on ${date}`;
-        img.src = data.url;
-        imgContainer.appendChild(img);
+        if(!(data.url.includes("video"))){
+            img.src = data.url;
+            imgContainer.appendChild(img);
+        } else {
+            iframe.src = data.url;
+            iframe.frameBorder = "0";
+            imgContainer.removeChild(img);
+            imgContainer.appendChild(iframe);
+        }
         img_desc.innerHTML = data.title;
         description.innerHTML = data.explanation;      
         currentImgContainer.append(title, imgContainer, img_desc, description);
