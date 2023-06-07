@@ -23,7 +23,7 @@ function getCurrentImageOfTheDay(){
         return res.json();
     })
     .then((data) => {
-        // console.log(data);
+        console.log(data);
         title.innerHTML = "NASA picture of the Day";
         if(!(data.url.includes("video"))){
             img.src = data.url;
@@ -60,6 +60,7 @@ function getImageOfTheDay(event) {
         return res.json();
     })
     .then((data) => {
+        console.log(data);
         title.innerHTML = `Picture on ${date}`;
         if(!(data.url.includes("video"))){
             img.src = data.url;
